@@ -39,10 +39,17 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                echo 'Delivering..'
-            }
-        }
+stage('Deliver') {
+    steps {
+        echo 'Delivering the application...'
+        // Run the JAR file built by Maven. Adjust the path to the JAR as necessary.
+        sh 'java -jar target/petclinic.jar > /dev/null 2>&1 &'
+        // Here we assume the app takes some time to start. Adjust the sleep time as necessary.
+        sh 'sleep 30'
+        // Here you could add a curl command to check the health of the application if an endpoint is available
+        // sh 'curl http://localhost:8080/health'
+        echo 'Application is delivered. Please manually verify its running state and take a screenshot.'
+    }
+}
     }
 }
