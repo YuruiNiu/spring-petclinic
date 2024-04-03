@@ -16,6 +16,7 @@ pipeline {
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [],
                     userRemoteConfigs: [[
+                        // Use double quotes for variable expansion
                         credentialsId: "${GIT_CREDENTIAL_ID}",
                         url: 'https://github.com/YuruiNiu/spring-petclinic.git'
                     ]]
@@ -37,7 +38,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName='petclinic'"
+                    // Add 'echo' to print the Maven command being run
+                    echo "Running SonarQube analysis..."
+                    script {
+                        def mvnCmd = "mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName='petclinic'"
+                        echo "Executing: ${mvnCmd}"
+                        sh mvnCmd
+                    }
                 }
             }
         }
