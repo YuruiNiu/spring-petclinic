@@ -32,6 +32,13 @@ pipeline {
                 sh './mvnw test'
             }
         }
+         stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName='petclinic'"
+                }
+            }
+        }
         stage('Deliver') {
             steps {
                 echo 'Delivering..'
