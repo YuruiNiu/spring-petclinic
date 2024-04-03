@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    tools {
+        // The name 'M3' should match the name given to the Maven installation in your Jenkins global tools configuration
+        maven 'M3'
+    }
     environment {
         // Replace 'your-credential-id' with the actual ID of your GitHub credentials
         GIT_CREDENTIAL_ID = credentials('github-credentials')
@@ -37,15 +41,8 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    // Add 'echo' to print the Maven command being run
-                    echo "Running SonarQube analysis..."
-                    script {
-                        def mvnCmd = "mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName='petclinic'"
-                        echo "Executing: ${mvnCmd}"
-                        sh mvnCmd
-                    }
-                }
+                // The 'mvn' command will use the Maven installation defined above by 'tools'
+                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName=\'petclinic\''
             }
         }
         stage('Deliver') {
@@ -64,7 +61,7 @@ pipeline {
     post {
         always {
             // Ensure that the application is killed after the job is done
-            sh 'pkill -f \'java -jar target/*.jar\''
+            sh 'pkill -f \'java -jar target/*.jar\' || true'
         }
     }
 }
