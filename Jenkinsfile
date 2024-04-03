@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    tools {
-        maven 'Maven' // Assumes you've configured Maven named 'Maven' in Global Tool Configuration
-        jdk 'Java' // Assumes you've configured JDK named 'Java' in Global Tool Configuration
-    }
 
     stages {
         stage('Build') {
