@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    environment {
+        GIT_CREDENTIAL_ID = 'github-credentials'
 
     stages {
         stage('Build') {
@@ -21,3 +23,5 @@ pipeline {
         }
     }
 }
+
+
