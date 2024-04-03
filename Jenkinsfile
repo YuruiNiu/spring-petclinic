@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         // Replace 'your-credential-id' with the actual ID of your GitHub credentials
-        GIT_CREDENTIAL_ID = 'github-credentials'
+        GIT_CREDENTIAL_ID = credentials('github-credentials')
         // Define the environment variable for SonarQube if needed here
         // SONARQUBE_CREDENTIAL_ID = 'your-sonar-credentials-id'
     }
