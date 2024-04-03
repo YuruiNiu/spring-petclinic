@@ -6,11 +6,6 @@ pipeline {
         // Define the environment variable for SonarQube if needed here
         // SONARQUBE_CREDENTIAL_ID = 'your-sonar-credentials-id'
     }
-    tools {
-        // Ensure these tool names match what's configured in Jenkins
-        maven 'M3'
-        //jdk 'Java17'
-    }
     stages {
         stage('Checkout') {
             steps {
