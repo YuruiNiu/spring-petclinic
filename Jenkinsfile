@@ -35,19 +35,6 @@ pipeline {
                 sh './mvnw test'
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    // Add 'echo' to print the Maven command being run
-                    echo "Running SonarQube analysis..."
-                    script {
-                        def mvnCmd = "mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName='petclinic'"
-                        echo "Executing: ${mvnCmd}"
-                        sh mvnCmd
-                    }
-                }
-            }
-        }
         stage('Deliver') {
             steps {
                 echo 'Delivering the application...'
