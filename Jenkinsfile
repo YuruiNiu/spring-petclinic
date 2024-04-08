@@ -48,7 +48,8 @@ pipeline {
              steps {
                 echo 'Delivering the application...'
                 // Assuming the jar file is named 'spring-petclinic-3.2.0-SNAPSHOT.jar' after the build. Adjust the name accordingly.
-                sh 'java -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar &'
+                sh 'java -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar --server.port=9090 &'
+
                 // Optionally wait for the application to start
                 sh 'sleep 30'
                 echo 'Application should now be running.'
