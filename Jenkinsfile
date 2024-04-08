@@ -8,7 +8,7 @@ pipeline {
         // Replace 'your-credential-id' with the actual ID of your GitHub credentials
         GIT_CREDENTIAL_ID = credentials('github-credentials')
         // Define the environment variable for SonarQube if needed here
-        // SONARQUBE_CREDENTIAL_ID = 'your-sonar-credentials-id'
+        // SONARQUBE_CREDENTIAL_ID = 'A1'
     }
     stages {
         stage('Checkout') {
@@ -41,9 +41,11 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                // The 'mvn' command will use the Maven installation defined above by 'tools'
-                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName=\'petclinic\''
-            }
+                // Injects the SonarQube server configuration and credentials stored in Jenkins
+                withSonarQubeEnv('My SonarQube Server', credentialsId: "${SONARQUBE_CREDENTIAL_ID}") {
+                    // The 'mvn' command will use the Maven installation defined above by 'tools'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName="petclinic"'
+                }
         }
         stage('Deliver') {
             steps {
