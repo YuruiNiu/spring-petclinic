@@ -40,7 +40,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'A1') {
-                sh 'mvn sonar:sonar -Dsonar.projectKey=spring-petclinic -Dsonar.projectName="spring-petclinic"'
+                sh 'mvn sonar:sonar -Dsonar.projectKey=spring-petclinic -Dsonar.projectName="spring-petclinic" -Dsonar.host.url=http://sonarqube:9000'
                 }
             }
         }
