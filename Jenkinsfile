@@ -45,18 +45,19 @@ pipeline {
             }
         }
         stage('Deliver') {
-            steps {
+             steps {
                 echo 'Delivering the application...'
-                sh 'java -jar target/*.jar &'
+                // Assuming the jar file is named 'spring-petclinic-3.2.0-SNAPSHOT.jar' after the build. Adjust the name accordingly.
+                sh 'java -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar &'
+                // Optionally wait for the application to start
                 sh 'sleep 30'
-                echo 'Application is delivered. Please manually verify its running state and take a screenshot.'
+                echo 'Application should now be running.'
             }
         }
     }
     post {
         always {
-            // Correctly placed within the pipeline structure
-            sh 'pkill -f \'java -jar target/*.jar\' || true'
-        }
+        sh 'pkill -f "spring-petclinic-3.2.0-SNAPSHOT.jar" || true'
+    }
     }
 }
