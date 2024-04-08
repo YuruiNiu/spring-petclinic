@@ -42,7 +42,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 // Injects the SonarQube server configuration and credentials stored in Jenkins
-                withSonarQubeEnv('My SonarQube Server', credentialsId: "${SONARQUBE_CREDENTIAL_ID}") {
+                withSonarQubeEnv('SonarQube', credentialsId: "${SONARQUBE_CREDENTIAL_ID}") {
                     // The 'mvn' command will use the Maven installation defined above by 'tools'
                     sh 'mvn sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName="petclinic"'
                 }
