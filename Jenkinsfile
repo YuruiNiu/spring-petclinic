@@ -1,7 +1,6 @@
 pipeline {
     agent any
     tools {
-        // The name 'M3' should match the name given to the Maven installation in your Jenkins global tools configuration
         maven 'M3'
     }
     environment {
@@ -11,14 +10,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // This will use the credentials defined above to check out your code
                 checkout scm: [
                     $class: 'GitSCM',
                     branches: [[name: '*/main']],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [],
                     userRemoteConfigs: [[
-                        // Use double quotes for variable expansion
                         credentialsId: "${GIT_CREDENTIAL_ID}",
                         url: 'https://github.com/YuruiNiu/spring-petclinic.git'
                     ]]
@@ -47,10 +44,7 @@ pipeline {
         stage('Deliver') {
              steps {
                 echo 'Delivering the application...'
-                // Assuming the jar file is named 'spring-petclinic-3.2.0-SNAPSHOT.jar' after the build. Adjust the name accordingly.
-                sh 'java -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar --server.port=9090 &'
-
-                // Optionally wait for the application to start
+                sh 'java -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar &'
                 sh 'sleep 30'
                 echo 'Application should now be running.'
             }
