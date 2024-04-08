@@ -5,10 +5,8 @@ pipeline {
         maven 'M3'
     }
     environment {
-        // Replace 'github-credentials' with the actual ID of your GitHub credentials
         GIT_CREDENTIAL_ID = credentials('github-credentials')
-        // Now using the SonarQube credentials
-        SONARQUBE_CREDENTIAL_ID = credentials('A1') // Correctly define the SonarQube credentials ID
+        SONARQUBE_CREDENTIAL_ID = credentials('A1')
     }
     stages {
         stage('Checkout') {
@@ -37,6 +35,13 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh './mvnw test'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'A1') {
+                sh 'mvn sonar:sonar -Dsonar.projectKey=spring-petclinic -Dsonar.projectName="spring-petclinic"'
+                }
             }
         }
         stage('Deliver') {
