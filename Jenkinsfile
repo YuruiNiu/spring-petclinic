@@ -44,7 +44,7 @@ pipeline {
                 // Correctly formatted withSonarQubeEnv usage
                 // Injects the SonarQube server configuration and credentials stored in Jenkins
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'A1') {
-                sh 'mvn sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName="petclinic"'
+                sh 'mvn sonar:sonar'
                 }
             }
         }
