@@ -39,15 +39,6 @@ pipeline {
                 sh './mvnw test'
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                // Correctly formatted withSonarQubeEnv usage
-                // Injects the SonarQube server configuration and credentials stored in Jenkins
-                withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'A1') {
-                sh 'mvn sonar:sonar'
-                }
-            }
-        }
         stage('Deliver') {
             steps {
                 echo 'Delivering the application...'
